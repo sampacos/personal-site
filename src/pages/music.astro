@@ -1,0 +1,143 @@
+---
+import AuthButton from '../components/AuthButton';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Listening from '../components/Listening';
+import MusicToggle from '../components/MusicToggle';
+import SoundCloudLikes from '../components/SoundCloudLikes';
+import ThemeToggle from '../components/ThemeToggle';
+import { SITE_TITLE } from '../consts';
+
+const now = new Date();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Music - ${SITE_TITLE}`} description="Music and currently listening status" />
+    <script is:inline>
+      (function () {
+        const theme =
+          (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="flex min-h-screen flex-col justify-between bg-white font-sans text-[13px] leading-relaxed text-black transition-colors duration-150 dark:bg-[#151515] dark:text-[#e0e0e0]"
+  >
+    {/* Top Header Banner */}
+    <div class="flex flex-1 flex-col">
+      <header
+        class="border-b border-gray-200 bg-white px-4 py-3 dark:border-[#222222] dark:bg-[#151515]"
+      >
+        <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <a
+              href="/"
+              class="font-serif text-xl font-bold text-black hover:underline dark:text-white"
+              >pacos</a
+            >
+            <span class="text-gray-400 dark:text-gray-600">&gt;</span>
+            <span class="font-medium text-black dark:text-[#cccccc]">nyc</span>
+            <span class="text-gray-400 dark:text-gray-600">&gt;</span>
+            <span class="text-gray-600 dark:text-[#aaaaaa]">music</span>
+          </div>
+          <div class="flex items-center space-x-3 text-xs">
+            <span class="text-gray-600 dark:text-gray-400">
+              {
+                now.toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })
+              }
+            </span>
+            <ThemeToggle client:load />
+            <MusicToggle client:load />
+            <AuthButton client:load />
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main class="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-8 px-4 py-8">
+        {/* 1. SoundCloud Section with Real Likes Player & List */}
+        <section class="bg-white dark:bg-transparent">
+          <h2
+            class="m-0 border-b border-gray-200 pb-1 text-xs font-bold tracking-wide text-black uppercase dark:border-[#2a2a2a] dark:text-white"
+          >
+            SoundCloud
+          </h2>
+          <div class="mb-3 pt-2 text-xs">
+            <a
+              href="https://soundcloud.com/sam2445"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="craigslist-link font-medium"
+            >
+              https://soundcloud.com/sam2445
+            </a>
+          </div>
+          <SoundCloudLikes client:load />
+        </section>
+
+        {/* 2. Currently Listening (Spotify) Section */}
+        <section class="bg-white dark:bg-transparent">
+          <Listening client:load />
+        </section>
+
+        {/* Return Link */}
+        <div class="pt-4 text-xs">
+          <a href="/" class="craigslist-link"> &larr; return to homepage </a>
+        </div>
+      </main>
+    </div>
+
+    {/* Footer */}
+    <Footer />
+
+    {/* Scoped CSS for Classic Craigslist Links */}
+    <style is:global>
+      a.craigslist-link,
+      .craigslist-link a,
+      a.craigslist-link:link {
+        color: #0000ee;
+        text-decoration: underline;
+      }
+      a.craigslist-link:visited {
+        color: #551a8b;
+      }
+      a.craigslist-link:hover {
+        text-decoration: underline;
+        color: #0000ee;
+      }
+      a.craigslist-link:active {
+        color: #ee0000;
+      }
+      .dark a.craigslist-link,
+      .dark .craigslist-link a,
+      .dark a.craigslist-link:link {
+        color: #58a6ff;
+        text-decoration: underline;
+      }
+      .dark a.craigslist-link:visited {
+        color: #c084fc;
+      }
+      .dark a.craigslist-link:hover {
+        text-decoration: underline;
+        color: #79b8ff;
+      }
+      .dark a.craigslist-link:active {
+        color: #ff7b72;
+      }
+    </style>
+  </body>
+</html>

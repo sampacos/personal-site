@@ -1,0 +1,10 @@
+export const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || '';
+export const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || '';
+export const SPOTIFY_REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN || '';
+export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || '';
+export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || '';
+export const AUTH_SECRET = process.env.AUTH_SECRET || '';
+export const ADMIN_GITHUB_USERNAME = process.env.ADMIN_GITHUB_USERNAME || 'sampacos';
+export const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID || '';
+export const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || '';
+export const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY || '';

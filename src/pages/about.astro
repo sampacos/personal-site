@@ -1,0 +1,148 @@
+---
+import AuthButton from '../components/AuthButton';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import MusicToggle from '../components/MusicToggle';
+import ThemeToggle from '../components/ThemeToggle';
+import { SITE_TITLE } from '../consts';
+
+const now = new Date();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`About - ${SITE_TITLE}`}
+      description="About Sam Pacos - personal bio, background, and projects"
+    />
+    <script is:inline>
+      (function () {
+        const theme =
+          (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="flex min-h-screen flex-col justify-between bg-white font-sans text-[13px] leading-relaxed text-black transition-colors duration-150 dark:bg-[#151515] dark:text-[#e0e0e0]"
+  >
+    <div class="flex flex-1 flex-col">
+      {/* Top Header Banner */}
+      <header
+        class="border-b border-gray-200 bg-white px-4 py-3 dark:border-[#222222] dark:bg-[#151515]"
+      >
+        <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <a
+              href="/"
+              class="font-serif text-xl font-bold text-black hover:underline dark:text-white"
+              >pacos</a
+            >
+            <span class="text-gray-400 dark:text-gray-600">&gt;</span>
+            <span class="font-medium text-black dark:text-[#cccccc]">nyc</span>
+            <span class="text-gray-400 dark:text-gray-600">&gt;</span>
+            <span class="text-gray-600 dark:text-[#aaaaaa]">about</span>
+          </div>
+          <div class="flex items-center space-x-3 text-xs">
+            <span class="text-gray-600 dark:text-gray-400">
+              {
+                now.toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })
+              }
+            </span>
+            <ThemeToggle client:load />
+            <MusicToggle client:load />
+            <AuthButton client:load />
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main class="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-10">
+        <header class="border-b border-gray-200 pb-3 dark:border-[#2a2a2a]">
+          <h1 class="mb-1 font-serif text-2xl font-bold text-black dark:text-white">About Me</h1>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            Software engineer, bread enthusiast, Arsenal supporter, and random guy with ideas.
+            Currently living in Brooklyn.
+          </p>
+        </header>
+
+        <section class="space-y-4 text-xs leading-relaxed text-black dark:text-[#d0d0d0]">
+          <p>
+            Hi! I'm Sam Pacos aka Pacos aka spacos. This website is a dump for whatever is on my
+            mind. Hope you enjoy! :D
+          </p>
+          <h2
+            id="contact"
+            class="border-b border-gray-100 pt-2 pb-1 font-serif text-sm font-bold text-black dark:border-[#222222] dark:text-white"
+          >
+            Contact
+          </h2>
+          <p>
+            Feel free to reach out via email at <a
+              href="mailto:sam@pacos.nyc"
+              class="craigslist-link">sam@pacos.nyc</a
+            >.
+          </p>
+        </section>
+
+        {/* Return Links */}
+        <div class="flex gap-4 border-t border-gray-100 pt-6 text-xs dark:border-[#2a2a2a]">
+          <a href="/" class="craigslist-link"> &larr; return to homepage </a>
+          <span class="text-gray-400">&bull;</span>
+          <a href="/blog" class="craigslist-link"> read blog writings </a>
+        </div>
+      </main>
+    </div>
+
+    {/* Footer */}
+    <Footer />
+
+    {/* Scoped CSS for Classic Craigslist Links */}
+    <style is:global>
+      a.craigslist-link,
+      .craigslist-link a,
+      a.craigslist-link:link {
+        color: #0000ee;
+        text-decoration: underline;
+      }
+      a.craigslist-link:visited {
+        color: #551a8b;
+      }
+      a.craigslist-link:hover {
+        text-decoration: underline;
+        color: #0000ee;
+      }
+      a.craigslist-link:active {
+        color: #ee0000;
+      }
+      .dark a.craigslist-link,
+      .dark .craigslist-link a,
+      .dark a.craigslist-link:link {
+        color: #58a6ff;
+        text-decoration: underline;
+      }
+      .dark a.craigslist-link:visited {
+        color: #c084fc;
+      }
+      .dark a.craigslist-link:hover {
+        text-decoration: underline;
+        color: #79b8ff;
+      }
+      .dark a.craigslist-link:active {
+        color: #ff7b72;
+      }
+    </style>
+  </body>
+</html>

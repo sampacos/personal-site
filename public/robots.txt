@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /photos/
+Disallow: /api/
+Disallow: /admin/
+Allow: /
+
+Sitemap: https://pacos.nyc/sitemap-index.xml

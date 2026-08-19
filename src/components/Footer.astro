@@ -1,0 +1,24 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer
+  class="w-full border-t border-gray-200 bg-white py-4 text-center text-xs text-gray-600 dark:border-[#222222] dark:bg-[#151515] dark:text-gray-400"
+>
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4">
+    <span>&copy; {currentYear} pacos.nyc</span>
+    <span>&bull;</span>
+    <a href="/about" class="craigslist-link">about</a>
+    <span>&bull;</span>
+    <a href="/blog" class="craigslist-link">blog</a>
+    <span>&bull;</span>
+    <a href="mailto:sam@pacos.nyc" class="craigslist-link">contact</a>
+    <span>&bull;</span>
+    <a
+      href="https://github.com/sampacos"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="craigslist-link">github</a
+    >
+  </div>
+</footer>

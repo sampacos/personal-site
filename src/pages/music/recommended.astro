@@ -1,0 +1,254 @@
+---
+import AuthButton from '../../components/AuthButton';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import MusicToggle from '../../components/MusicToggle';
+import ThemeToggle from '../../components/ThemeToggle';
+import { SITE_TITLE } from '../../consts';
+import { getRecommendations } from '../../lib/sheets';
+
+export const prerender = false;
+
+const items = await getRecommendations();
+const songs = items.filter((i) => i.category === 'songs');
+const albums = items.filter((i) => i.category === 'albums');
+const podcasts = items.filter((i) => i.category === 'podcasts');
+
+const now = new Date();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Recommended Listening - ${SITE_TITLE}`}
+      description="Songs, albums, podcasts, and recordings I enjoy"
+    />
+    <script is:inline>
+      (function () {
+        const theme =
+          (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="flex min-h-screen flex-col justify-between bg-white font-sans text-[13px] leading-relaxed text-black transition-colors duration-150 dark:bg-[#151515] dark:text-[#e0e0e0]"
+  >
+    {/* Top Header Banner */}
+    <div class="flex flex-1 flex-col">
+      <header
+        class="border-b border-gray-200 bg-white px-4 py-3 dark:border-[#222222] dark:bg-[#151515]"
+      >
+        <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <a
+              href="/"
+              class="font-serif text-xl font-bold text-black hover:underline dark:text-white"
+              >pacos</a
+            >
+            <span class="text-gray-400 dark:text-gray-600">&gt;</span>
+            <span class="font-medium text-black dark:text-[#cccccc]">nyc</span>
+            <span class="text-gray-400 dark:text-gray-600">&gt;</span>
+            <a href="/music" class="font-medium text-black hover:underline dark:text-[#cccccc]"
+              >music</a
+            >
+            <span class="text-gray-400 dark:text-gray-600">&gt;</span>
+            <span class="text-gray-600 dark:text-[#aaaaaa]">recommended</span>
+          </div>
+          <div class="flex items-center space-x-3 text-xs">
+            <span class="text-gray-600 dark:text-gray-400">
+              {
+                now.toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })
+              }
+            </span>
+            <ThemeToggle client:load />
+            <MusicToggle client:load />
+            <AuthButton client:load />
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main class="mx-auto flex w-full max-w-4xl flex-1 flex-col gap-6 px-4 py-8">
+        <div>
+          <h1 class="mb-1 font-serif text-base font-bold text-black dark:text-white">
+            Recommended Listening
+          </h1>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            Songs, albums, mixes, and podcasts that I enjoy and recommend.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 pt-2 md:grid-cols-3">
+          {/* 1. Songs */}
+          <section class="bg-white dark:bg-transparent">
+            <h2
+              class="m-0 border-b border-gray-200 pb-1 text-xs font-bold tracking-wide text-black uppercase dark:border-[#2a2a2a] dark:text-white"
+            >
+              songs ({songs.length})
+            </h2>
+            <div class="pt-2">
+              {
+                songs.length > 0 ? (
+                  <ul class="m-0 list-none space-y-1.5 p-0 text-xs">
+                    {songs.map((item) => (
+                      <li>
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="craigslist-link"
+                        >
+                          {item.title}
+                        </a>
+                        {item.artist && (
+                          <span class="block text-[11px] text-gray-500 dark:text-gray-400">
+                            {item.artist}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-xs text-gray-500 italic dark:text-gray-400">No songs yet.</p>
+                )
+              }
+            </div>
+          </section>
+
+          {/* 2. Albums & Mixes */}
+          <section class="bg-white dark:bg-transparent">
+            <h2
+              class="m-0 border-b border-gray-200 pb-1 text-xs font-bold tracking-wide text-black uppercase dark:border-[#2a2a2a] dark:text-white"
+            >
+              albums &amp; mixes ({albums.length})
+            </h2>
+            <div class="pt-2">
+              {
+                albums.length > 0 ? (
+                  <ul class="m-0 list-none space-y-1.5 p-0 text-xs">
+                    {albums.map((item) => (
+                      <li>
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="craigslist-link"
+                        >
+                          {item.title}
+                        </a>
+                        {item.artist && (
+                          <span class="block text-[11px] text-gray-500 dark:text-gray-400">
+                            {item.artist}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-xs text-gray-500 italic dark:text-gray-400">
+                    No albums or mixes yet.
+                  </p>
+                )
+              }
+            </div>
+          </section>
+
+          {/* 3. Podcasts */}
+          <section class="bg-white dark:bg-transparent">
+            <h2
+              class="m-0 border-b border-gray-200 pb-1 text-xs font-bold tracking-wide text-black uppercase dark:border-[#2a2a2a] dark:text-white"
+            >
+              podcasts ({podcasts.length})
+            </h2>
+            <div class="pt-2">
+              {
+                podcasts.length > 0 ? (
+                  <ul class="m-0 list-none space-y-1.5 p-0 text-xs">
+                    {podcasts.map((item) => (
+                      <li>
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="craigslist-link"
+                        >
+                          {item.title}
+                        </a>
+                        {item.artist && (
+                          <span class="block text-[11px] text-gray-500 dark:text-gray-400">
+                            {item.artist}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="text-xs text-gray-500 italic dark:text-gray-400">No podcasts yet.</p>
+                )
+              }
+            </div>
+          </section>
+        </div>
+
+        {/* Return Links */}
+        <div class="flex gap-4 border-t border-gray-100 pt-6 text-xs dark:border-[#2a2a2a]">
+          <a href="/music" class="craigslist-link"> &larr; return to music &amp; spotify </a>
+          <span class="text-gray-400">&bull;</span>
+          <a href="/" class="craigslist-link"> return to homepage </a>
+        </div>
+      </main>
+    </div>
+
+    {/* Shared Footer */}
+    <Footer />
+
+    {/* Scoped CSS for Classic Craigslist Links */}
+    <style is:global>
+      a.craigslist-link,
+      .craigslist-link a,
+      a.craigslist-link:link {
+        color: #0000ee;
+        text-decoration: underline;
+      }
+      a.craigslist-link:visited {
+        color: #551a8b;
+      }
+      a.craigslist-link:hover {
+        text-decoration: underline;
+        color: #0000ee;
+      }
+      a.craigslist-link:active {
+        color: #ee0000;
+      }
+      .dark a.craigslist-link,
+      .dark .craigslist-link a,
+      .dark a.craigslist-link:link {
+        color: #58a6ff;
+        text-decoration: underline;
+      }
+      .dark a.craigslist-link:visited {
+        color: #c084fc;
+      }
+      .dark a.craigslist-link:hover {
+        text-decoration: underline;
+        color: #79b8ff;
+      }
+      .dark a.craigslist-link:active {
+        color: #ff7b72;
+      }
+    </style>
+  </body>
+</html>
