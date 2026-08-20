@@ -59,7 +59,7 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
     const userResponse = await fetch('https://api.github.com/user', {
       headers: {
         Authorization: `Bearer ${tokenData.access_token}`,
-        'User-Agent': 'pacos-nyc-personal-website',
+        'User-Agent': 'pacos-nyc-personal-site',
       },
     });
 

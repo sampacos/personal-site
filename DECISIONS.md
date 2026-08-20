@@ -19,7 +19,7 @@
   1. `standard-setter` (Perfectionist code quality, strict TypeScript, performance, accessibility)
   2. `creative-maverick` (Fun, interactive UI, mixtape app, game canvas, playfulness)
   3. `orchestrator` (Architectural synthesis, documentation, ADR maintenance)
-* **Persisted Files:** [`AGENTS.md`](file:///Users/sampacos/repos/personal-website/AGENTS.md), [`.agents/rules/`](file:///Users/sampacos/repos/personal-website/.agents/rules), [`.agents/subagents/`](file:///Users/sampacos/repos/personal-website/.agents/subagents).
+* **Persisted Files:** [`AGENTS.md`](file:///Users/sampacos/repos/personal-site/AGENTS.md), [`.agents/rules/`](file:///Users/sampacos/repos/personal-site/.agents/rules), [`.agents/subagents/`](file:///Users/sampacos/repos/personal-site/.agents/subagents).
 
 ## ADR-003: Automated Testing Strategy (Vitest + Playwright)
 * **Date:** 2026-08-19
@@ -29,7 +29,7 @@
 * **Rationale:**
   * **Vitest:** Native Vite integration (matches Astro build pipeline), instant execution, native TypeScript support, effortless mocking of API routes (`/api/spotify`).
   * **Playwright:** Multi-browser headless E2E testing (Chromium, Firefox, WebKit), full keyboard accessibility automation, visual canvas snapshot testing.
-* **Rule Spec:** [`.agents/rules/04-testing.md`](file:///Users/sampacos/repos/personal-website/.agents/rules/04-testing.md).
+* **Rule Spec:** [`.agents/rules/04-testing.md`](file:///Users/sampacos/repos/personal-site/.agents/rules/04-testing.md).
 
 ## ADR-004: Husky Pre-Commit & Pre-Push Git Hooks
 * **Date:** 2026-08-19
@@ -54,7 +54,7 @@
 * **Date:** 2026-08-19
 * **Status:** Approved
 * **Context:** Enable automatic subagent task delegation without manual user routing.
-* **Decision:** Established [`.agents/rules/00-router.md`](file:///Users/sampacos/repos/personal-website/.agents/rules/00-router.md).
+* **Decision:** Established [`.agents/rules/00-router.md`](file:///Users/sampacos/repos/personal-site/.agents/rules/00-router.md).
 * **Behavior:**
   * **Interactive UI & Creative Features:** Automatically spawns `creative-maverick`.
   * **Code Reviews, Testing & Standards:** Automatically spawns `standard-setter`.
@@ -71,9 +71,9 @@
 * **Status:** Approved
 * **Context:** Reset homepage design direction to a clean, fast, early-web Craigslist-style classifieds directory with white background, left sidemenu, default blue links that turn purple when visited, a dark theme toggle, and a persistent tiny bottom-right background music button.
 * **Implementation:**
-  * [`src/pages/index.astro`](file:///Users/sampacos/repos/personal-website/src/pages/index.astro): Craigslist layout with left sidemenu, mini calendar widget, categorized classifieds grid (community, blog writings, projects, music, gear, services), and classic footer.
-  * [`src/components/ThemeToggle.tsx`](file:///Users/sampacos/repos/personal-website/src/components/ThemeToggle.tsx): Zero-flash light/dark theme switcher with `localStorage` persistence.
-  * [`src/components/MusicToggle.tsx`](file:///Users/sampacos/repos/personal-website/src/components/MusicToggle.tsx): Discreet fixed bottom-right music play/pause toggle with audio state indicators.
+  * [`src/pages/index.astro`](file:///Users/sampacos/repos/personal-site/src/pages/index.astro): Craigslist layout with left sidemenu, mini calendar widget, categorized classifieds grid (community, blog writings, projects, music, gear, services), and classic footer.
+  * [`src/components/ThemeToggle.tsx`](file:///Users/sampacos/repos/personal-site/src/components/ThemeToggle.tsx): Zero-flash light/dark theme switcher with `localStorage` persistence.
+  * [`src/components/MusicToggle.tsx`](file:///Users/sampacos/repos/personal-site/src/components/MusicToggle.tsx): Discreet fixed bottom-right music play/pause toggle with audio state indicators.
   * Link styling: Classic default blue (`#0000ee`) and visited purple (`#551a8b`) with high-contrast accessible variants in dark mode.
 
 ## ADR-009: Spotify Live Playback Integration & Serverless API Architecture
@@ -81,10 +81,10 @@
 * **Status:** Approved
 * **Context:** Enable live, real-time public playback status on `/music` without requiring website visitors to authenticate or expose private Spotify API secrets.
 * **Implementation:**
-  * [`src/lib/spotify.ts`](file:///Users/sampacos/repos/personal-website/src/lib/spotify.ts): Server-side helper using OAuth2 Refresh Token rotation with fallback to recently played tracks when idle.
-  * [`src/pages/api/spotify/now-playing.ts`](file:///Users/sampacos/repos/personal-website/src/pages/api/spotify/now-playing.ts): Serverless API route delivering cached, lightweight JSON payload to client widgets.
-  * [`src/components/Listening.tsx`](file:///Users/sampacos/repos/personal-website/src/components/Listening.tsx): Craigslist-styled live component polling the endpoint every 15s.
-  * [`src/pages/music.astro`](file:///Users/sampacos/repos/personal-website/src/pages/music.astro): Clean music page featuring SoundCloud link and live Spotify widget.
-  * [`scripts/exchange-spotify-code.mjs`](file:///Users/sampacos/repos/personal-website/scripts/exchange-spotify-code.mjs): Interactive CLI token generator supporting HTTPS redirect URIs.
+  * [`src/lib/spotify.ts`](file:///Users/sampacos/repos/personal-site/src/lib/spotify.ts): Server-side helper using OAuth2 Refresh Token rotation with fallback to recently played tracks when idle.
+  * [`src/pages/api/spotify/now-playing.ts`](file:///Users/sampacos/repos/personal-site/src/pages/api/spotify/now-playing.ts): Serverless API route delivering cached, lightweight JSON payload to client widgets.
+  * [`src/components/Listening.tsx`](file:///Users/sampacos/repos/personal-site/src/components/Listening.tsx): Craigslist-styled live component polling the endpoint every 15s.
+  * [`src/pages/music.astro`](file:///Users/sampacos/repos/personal-site/src/pages/music.astro): Clean music page featuring SoundCloud link and live Spotify widget.
+  * [`scripts/exchange-spotify-code.mjs`](file:///Users/sampacos/repos/personal-site/scripts/exchange-spotify-code.mjs): Interactive CLI token generator supporting HTTPS redirect URIs.
 
 
