@@ -1,7 +1,7 @@
 import {
   type ChangeEvent,
-  type FormEvent,
   type ReactNode,
+  type SubmitEvent,
   useEffect,
   useMemo,
   useState,
@@ -160,7 +160,7 @@ export default function BreadCalculator({ isAdmin }: BreadCalculatorProps) {
     }));
   };
 
-  const handleSave = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSave = async (event: SubmitEvent) => {
     event.preventDefault();
     if (saving) return;
     setSaving(true);

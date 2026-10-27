@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react';
+import { type SubmitEvent, useState } from 'react';
 
 export interface EditableBake {
   id: string;
@@ -22,7 +22,7 @@ export default function BakeEditManager({ bake }: { bake: EditableBake }) {
     setKeptPhotos((current) => current.filter((photo) => photo.id !== fileId));
   };
 
-  const handleSave = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSave = async (event: SubmitEvent) => {
     event.preventDefault();
     if (busy) return;
     setBusy(true);
