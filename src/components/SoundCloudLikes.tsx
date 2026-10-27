@@ -41,39 +41,39 @@ export default function SoundCloudLikes() {
   return (
     <div className="space-y-3">
       {/* HTML5 Player */}
-      <div className="border border-gray-200 dark:border-[#333333] rounded-xs overflow-hidden bg-white dark:bg-[#202020]">
+      <div className="overflow-hidden rounded-xs border border-gray-200 bg-white dark:border-[#333333] dark:bg-[#202020]">
         <iframe
           width="100%"
           height="120"
           allow="autoplay; encrypted-media; clipboard-write; picture-in-picture"
           src={embedUrl}
-          className="w-full block"
+          className="block w-full"
           title={`SoundCloud Player${activeTrack ? ` - ${activeTrack.title}` : ''}`}
         />
       </div>
 
       {/* Recent Likes List */}
       <div>
-        <div className="text-[11px] font-bold uppercase tracking-wider text-black dark:text-gray-300 mb-1.5 pb-1 border-b border-gray-200 dark:border-[#2a2a2a]">
+        <div className="mb-1.5 border-b border-gray-200 pb-1 text-[11px] font-bold tracking-wider text-black uppercase dark:border-[#2a2a2a] dark:text-gray-300">
           Recent Likes
         </div>
 
         {loading ? (
           <p className="text-xs text-gray-500 dark:text-gray-400">Loading liked tracks...</p>
         ) : tracks.length > 0 ? (
-          <ul className="space-y-1 list-none p-0 m-0 text-xs">
+          <ul className="m-0 list-none space-y-1 p-0 text-xs">
             {tracks.map((track) => (
               <li key={track.url} className="flex items-baseline justify-between gap-2">
                 <div className="truncate">
                   <button
                     type="button"
                     onClick={() => setActiveTrack(track)}
-                    className="text-left font-medium craigslist-link cursor-pointer hover:underline"
+                    className="craigslist-link cursor-pointer text-left font-medium hover:underline"
                     title={`Play ${track.title}`}
                   >
                     {track.title}
                   </button>
-                  <span className="text-gray-500 dark:text-gray-400 text-[11px] ml-1.5">
+                  <span className="ml-1.5 text-[11px] text-gray-500 dark:text-gray-400">
                     by {track.artist}
                   </span>
                 </div>
@@ -81,7 +81,7 @@ export default function SoundCloudLikes() {
                   href={track.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[11px] text-gray-400 dark:text-gray-500 hover:underline shrink-0"
+                  className="shrink-0 text-[11px] text-gray-400 hover:underline dark:text-gray-500"
                 >
                   ↗
                 </a>

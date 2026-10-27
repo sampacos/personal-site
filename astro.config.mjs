@@ -17,14 +17,34 @@ export default defineConfig({
   env: {
     schema: {
       SPOTIFY_CLIENT_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
-      SPOTIFY_CLIENT_SECRET: envField.string({ context: 'server', access: 'secret', optional: true }),
-      SPOTIFY_REFRESH_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true }),
+      SPOTIFY_CLIENT_SECRET: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
+      SPOTIFY_REFRESH_TOKEN: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
       GITHUB_CLIENT_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
-      GITHUB_CLIENT_SECRET: envField.string({ context: 'server', access: 'secret', optional: true }),
+      GITHUB_CLIENT_SECRET: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
       AUTH_SECRET: envField.string({ context: 'server', access: 'secret', optional: true }),
-      ADMIN_GITHUB_USERNAME: envField.string({ context: 'server', access: 'secret', optional: true }),
+      ADMIN_GITHUB_USERNAME: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
       GOOGLE_SHEET_ID: envField.string({ context: 'server', access: 'secret', optional: true }),
-      GOOGLE_SERVICE_ACCOUNT_EMAIL: envField.string({ context: 'server', access: 'secret', optional: true }),
+      GOOGLE_SERVICE_ACCOUNT_EMAIL: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: true,
+      }),
       GOOGLE_PRIVATE_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },

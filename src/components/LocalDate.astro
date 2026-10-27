@@ -1,0 +1,22 @@
+---
+// The visitor's local date can only be known on the client, and the page is
+// server-rendered (the server's timezone is typically UTC). Rendering the
+// server date would flash incorrect content, so the element stays hidden until
+// the inline script below fills it with the visitor's local date. With
+// JavaScript disabled nothing is shown, which is preferred over a wrong date.
+---
+
+<span id="local-date" class="invisible text-gray-600 dark:text-gray-400"></span>
+<script is:inline>
+  (function () {
+    var el = document.getElementById('local-date');
+    if (!el) return;
+    el.textContent = new Date().toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+    el.classList.remove('invisible');
+  })();
+</script>

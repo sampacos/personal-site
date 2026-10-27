@@ -2,6 +2,7 @@
 import AuthButton from '../components/AuthButton';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import LocalDate from '../components/LocalDate.astro';
 import MusicToggle from '../components/MusicToggle';
 import ThemeToggle from '../components/ThemeToggle';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
@@ -10,7 +11,6 @@ import { getBlogPosts } from '../lib/sheets';
 export const prerender = false;
 
 const blogPosts = await getBlogPosts();
-const now = new Date();
 ---
 
 <!doctype html>
@@ -47,16 +47,7 @@ const now = new Date();
             <span class="font-medium text-black dark:text-[#cccccc]">nyc</span>
           </div>
           <div class="flex items-center space-x-3 text-xs">
-            <span class="text-gray-600 dark:text-gray-400">
-              {
-                now.toLocaleDateString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
-              }
-            </span>
+            <LocalDate />
             <ThemeToggle client:load />
             <MusicToggle client:load />
             <AuthButton client:load />
@@ -125,7 +116,8 @@ const now = new Date();
                   href="https://github.com/sampacos"
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="craigslist-link">github ↗</a>
+                  class="craigslist-link">github ↗</a
+                >
               </li>
             </ul>
           </nav>
@@ -134,9 +126,9 @@ const now = new Date();
           <div
             class="space-y-0.5 border-t border-gray-200 pt-2 text-[11px] text-gray-600 dark:border-[#2a2a2a] dark:text-gray-400"
           >
-            <strong>status:</strong>
+            <strong>status: </strong>
             <a
-              href="https://youtu.be/Q7Vbn6GbsWE?si=CROKNMBo_RidQWMm&t=398"
+              href="https://youtu.be/Q7Vbn6GbsWE?si=CROKNMBo_RidQWMm&t=405"
               target="_blank"
               rel="noopener noreferrer"
               class="craigslist-link">champions</a
@@ -161,35 +153,40 @@ const now = new Date();
                       href="/photos/2026"
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      class="craigslist-link">2026</a>
+                      class="craigslist-link">2026</a
+                    >
                   </li>
                   <li>
                     <a
                       href="/photos/2025"
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      class="craigslist-link">2025</a>
+                      class="craigslist-link">2025</a
+                    >
                   </li>
                   <li>
                     <a
                       href="/photos/2024"
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      class="craigslist-link">2024</a>
+                      class="craigslist-link">2024</a
+                    >
                   </li>
                   <li>
                     <a
                       href="/photos/europe-2023"
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      class="craigslist-link">Europe Trip 2023</a>
+                      class="craigslist-link">Europe Trip 2023</a
+                    >
                   </li>
                   <li>
                     <a
                       href="/photos/all"
                       target="_blank"
                       rel="nofollow noopener noreferrer"
-                      class="craigslist-link font-medium">All</a>
+                      class="craigslist-link font-medium">All</a
+                    >
                   </li>
                 </ul>
               </div>
@@ -261,11 +258,13 @@ const now = new Date();
                       href="https://github.com/sampacos"
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="craigslist-link">github</a>
+                      class="craigslist-link">github</a
+                    >
                   </li>
                   <li>
                     <span class="text-[11px] text-gray-500 italic dark:text-gray-400"
-                      >more on the way...</span>
+                      >more on the way...</span
+                    >
                   </li>
                 </ul>
               </div>
@@ -286,7 +285,8 @@ const now = new Date();
                       href="https://soundcloud.com/sam2445"
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="craigslist-link">soundcloud profile</a>
+                      class="craigslist-link">soundcloud profile</a
+                    >
                   </li>
                   <li>
                     <a href="/music/recommended" class="craigslist-link">recommended listening</a>

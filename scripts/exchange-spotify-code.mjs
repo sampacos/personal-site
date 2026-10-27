@@ -29,7 +29,9 @@ const clientId = process.env.SPOTIFY_CLIENT_ID?.trim();
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET?.trim();
 
 if (!clientId || !clientSecret) {
-  console.error('\x1b[31mError: SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET must be set in .env\x1b[0m');
+  console.error(
+    '\x1b[31mError: SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET must be set in .env\x1b[0m'
+  );
   process.exit(1);
 }
 
@@ -41,7 +43,7 @@ const scopes = [
 ].join('%20');
 
 const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURIComponent(
-  redirectUri,
+  redirectUri
 )}&scope=${scopes}`;
 
 async function exchangeCode(rawInput) {

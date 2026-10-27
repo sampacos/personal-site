@@ -52,7 +52,7 @@ export default function MusicToggle() {
         aria-label={isPlaying ? 'Mute background music' : 'Play background music'}
         aria-pressed={isPlaying}
         title={isPlaying ? 'Mute music' : 'Play music'}
-        className="text-xs px-2 py-1 bg-white hover:bg-gray-50 dark:bg-[#252525] dark:hover:bg-[#303030] text-black dark:text-gray-200 border border-gray-300 dark:border-[#444444] rounded cursor-pointer flex items-center justify-center transition-colors focus:outline-2 focus:outline-blue-500"
+        className="flex cursor-pointer items-center justify-center rounded border border-gray-300 bg-white px-2 py-1 text-xs text-black transition-colors hover:bg-gray-50 focus:outline-2 focus:outline-blue-500 dark:border-[#444444] dark:bg-[#252525] dark:text-gray-200 dark:hover:bg-[#303030]"
       >
         <span aria-hidden="true">{isPlaying ? '🔊' : '🔇'}</span>
       </button>

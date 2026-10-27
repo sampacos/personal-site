@@ -2,6 +2,7 @@
 import AuthButton from '../../components/AuthButton';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
+import LocalDate from '../../components/LocalDate.astro';
 import MusicToggle from '../../components/MusicToggle';
 import ThemeToggle from '../../components/ThemeToggle';
 import { SITE_TITLE } from '../../consts';
@@ -13,8 +14,6 @@ const items = await getRecommendations();
 const songs = items.filter((i) => i.category === 'songs');
 const albums = items.filter((i) => i.category === 'albums');
 const podcasts = items.filter((i) => i.category === 'podcasts');
-
-const now = new Date();
 ---
 
 <!doctype html>
@@ -63,16 +62,7 @@ const now = new Date();
             <span class="text-gray-600 dark:text-[#aaaaaa]">recommended</span>
           </div>
           <div class="flex items-center space-x-3 text-xs">
-            <span class="text-gray-600 dark:text-gray-400">
-              {
-                now.toLocaleDateString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
-              }
-            </span>
+            <LocalDate />
             <ThemeToggle client:load />
             <MusicToggle client:load />
             <AuthButton client:load />

@@ -1,16 +1,17 @@
 # Rule 04: Mandatory Automated Testing Strategy
 
 ## Core Mandate
+
 Every single feature, component, API route, or interactive widget on this website **MUST** be covered by automated tests before being declared complete. Uncovered features are not allowed to be merged or pushed.
 
 ---
 
 ## Canonical Testing Stack (Mandatory Standard Tooling)
 
-| Test Type | Framework | Command | Purpose |
-| :--- | :--- | :--- | :--- |
-| **Unit & Integration** | **Vitest + React Testing Library** | `npm run test` | Testing utility functions, state logic (Mixtape app reducers), and API route handlers. |
-| **End-to-End (E2E)** | **Playwright + Axe Core** | `npm run test:e2e` | Testing real browser interactions, keyboard navigation, full page loads, canvas graphics, and accessibility. |
+| Test Type              | Framework                          | Command            | Purpose                                                                                                      |
+| :--------------------- | :--------------------------------- | :----------------- | :----------------------------------------------------------------------------------------------------------- |
+| **Unit & Integration** | **Vitest + React Testing Library** | `npm run test`     | Testing utility functions, state logic (Mixtape app reducers), and API route handlers.                       |
+| **End-to-End (E2E)**   | **Playwright + Axe Core**          | `npm run test:e2e` | Testing real browser interactions, keyboard navigation, full page loads, canvas graphics, and accessibility. |
 
 ---
 

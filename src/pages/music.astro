@@ -3,12 +3,11 @@ import AuthButton from '../components/AuthButton';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Listening from '../components/Listening';
+import LocalDate from '../components/LocalDate.astro';
 import MusicToggle from '../components/MusicToggle';
 import SoundCloudLikes from '../components/SoundCloudLikes';
 import ThemeToggle from '../components/ThemeToggle';
 import { SITE_TITLE } from '../consts';
-
-const now = new Date();
 ---
 
 <!doctype html>
@@ -50,16 +49,7 @@ const now = new Date();
             <span class="text-gray-600 dark:text-[#aaaaaa]">music</span>
           </div>
           <div class="flex items-center space-x-3 text-xs">
-            <span class="text-gray-600 dark:text-gray-400">
-              {
-                now.toLocaleDateString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
-              }
-            </span>
+            <LocalDate />
             <ThemeToggle client:load />
             <MusicToggle client:load />
             <AuthButton client:load />

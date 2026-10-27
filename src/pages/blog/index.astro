@@ -2,6 +2,7 @@
 import AuthButton from '../../components/AuthButton';
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
+import LocalDate from '../../components/LocalDate.astro';
 import MusicToggle from '../../components/MusicToggle';
 import ThemeToggle from '../../components/ThemeToggle';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
@@ -22,8 +23,6 @@ const currentPage = Math.max(1, parseInt(pageParam || '1', 10) || 1);
 const totalPages = Math.max(1, Math.ceil(allPosts.length / POSTS_PER_PAGE));
 const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
 const posts = allPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
-
-const now = new Date();
 ---
 
 <!doctype html>
@@ -65,16 +64,7 @@ const now = new Date();
             <span class="text-gray-600 dark:text-[#aaaaaa]">blog / writings</span>
           </div>
           <div class="flex items-center space-x-3 text-xs">
-            <span class="text-gray-600 dark:text-gray-400">
-              {
-                now.toLocaleDateString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
-              }
-            </span>
+            <LocalDate />
             <ThemeToggle client:load />
             <MusicToggle client:load />
             <AuthButton client:load />
