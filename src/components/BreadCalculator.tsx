@@ -1,11 +1,4 @@
-import {
-  type ChangeEvent,
-  type ReactNode,
-  type SubmitEvent,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { type ReactNode, type SubmitEvent, useEffect, useMemo, useState } from 'react';
 import {
   type BuildTable,
   type CalculatorState,
@@ -27,17 +20,22 @@ function NumberField({
   unit,
   value,
   onChange,
-  step = '0.1',
-  min = '0',
 }: {
   label: string;
   unit?: string;
   value: number;
   onChange: (value: number) => void;
-  step?: string;
-  min?: string;
 }) {
   const id = `field-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+  // While the field is focused, the raw text being typed lives in a local
+  // draft so the DOM value and cursor position are never rewritten between
+  // keystrokes (a controlled `type="number"` fights the browser over both).
+  // When editing ends the draft is dropped and the input shows the canonical
+  // form of the parsed number, which trims leading zeros and stray
+  // separators ("07.5" → "7.5").
+  const [draft, setDraft] = useState<string | null>(null);
+  const display = draft ?? String(value);
   return (
     <div className="flex items-center justify-between gap-2 py-0.5">
       <label htmlFor={id} className="text-[13px]">
@@ -46,14 +44,30 @@ function NumberField({
       </label>
       <input
         id={id}
-        type="number"
+        type="text"
         inputMode="decimal"
-        step={step}
-        min={min}
-        value={value}
-        onChange={(event: ChangeEvent<HTMLInputElement>) =>
-          onChange(Number(event.target.value) || 0)
-        }
+        autoComplete="off"
+        value={display}
+        onFocus={(event) => {
+          // Select the whole value so the next keystroke replaces it instead
+          // of appending at the cursor. iOS Safari ignores select() until
+          // focus has settled, so defer a frame.
+          const input = event.currentTarget;
+          requestAnimationFrame(() => {
+            if (document.activeElement === input) {
+              input.select();
+            }
+          });
+        }}
+        onChange={(event) => {
+          // Keep only digits and a single decimal separator; all values here
+          // are non-negative.
+          const [integer, ...decimals] = event.target.value.replace(/[^0-9.]/g, '').split('.');
+          const cleaned = decimals.length > 0 ? `${integer}.${decimals.join('')}` : integer;
+          setDraft(cleaned);
+          onChange(Number(cleaned) || 0);
+        }}
+        onBlur={() => setDraft(null)}
         className="w-24 rounded-xs border border-gray-300 bg-white px-2 py-1 text-right font-mono text-[13px] text-black focus:outline-2 focus:outline-blue-500 dark:border-[#444444] dark:bg-[#252525] dark:text-[#e0e0e0]"
       />
     </div>
@@ -248,14 +262,12 @@ export default function BreadCalculator({ isAdmin }: BreadCalculatorProps) {
           unit="g"
           value={state.batch.unitWeight}
           onChange={updateNumber('batch', 'unitWeight')}
-          step="1"
         />
         <NumberField
           label="Quantity of units"
           unit="ea"
           value={state.batch.quantityOfUnits}
           onChange={updateNumber('batch', 'quantityOfUnits')}
-          step="1"
         />
         <NumberField
           label="Waste factor"

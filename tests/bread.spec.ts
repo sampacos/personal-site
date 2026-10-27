@@ -47,6 +47,34 @@ test.describe('Bread Calculator Feature Tests', () => {
     await expect(waterField).toHaveValue('80');
   });
 
+  test('number fields select their whole value on focus and trim leading zeros on blur', async ({
+    page,
+  }) => {
+    await page.goto('/bread/calculator');
+    await page.locator('[data-hydrated="true"]').waitFor();
+
+    const waterField = page.getByLabel('Water (%)');
+    await waterField.focus();
+
+    // Focusing selects everything, so typing replaces the value instead of
+    // appending at the cursor (the mobile pain point).
+    const selection = await waterField.evaluate((el: HTMLInputElement) => ({
+      start: el.selectionStart,
+      end: el.selectionEnd,
+      length: el.value.length,
+    }));
+    expect(selection.start).toBe(0);
+    expect(selection.end).toBe(selection.length);
+
+    // While still editing, the raw text (including leading zeros) is shown...
+    await waterField.fill('080');
+    await expect(waterField).toHaveValue('080');
+
+    // ...and once editing stops it is normalized to the canonical number.
+    await waterField.blur();
+    await expect(waterField).toHaveValue('80');
+  });
+
   test('hides admin-only save section from unauthenticated visitors', async ({ page }) => {
     await page.goto('/bread/calculator');
 
