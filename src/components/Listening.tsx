@@ -50,7 +50,7 @@ export default function Listening() {
 
   return (
     <div className="space-y-2">
-      <h2 className="font-bold text-xs uppercase tracking-wide text-black dark:text-white m-0 pb-1 border-b border-gray-200 dark:border-[#2a2a2a]">
+      <h2 className="m-0 border-b border-gray-200 pb-1 text-xs font-bold tracking-wide text-black uppercase dark:border-[#2a2a2a] dark:text-white">
         Currently Listening to on Spotify
       </h2>
       <div className="pt-1 text-xs">
@@ -59,7 +59,7 @@ export default function Listening() {
         ) : track?.title ? (
           <p className="text-black dark:text-gray-200">
             <span
-              className={`font-bold mr-1.5 ${
+              className={`mr-1.5 font-bold ${
                 track.isPlaying
                   ? 'text-green-600 dark:text-green-400'
                   : 'text-gray-400 dark:text-gray-500'

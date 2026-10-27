@@ -21,20 +21,19 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.6",
     "@astrojs/react": "^6.0.3",
-    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/vercel": "^11.0.7",
     "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "astro": "^7.2.3",
+    "@vercel/blob": "^2.8.2",
+    "astro": "^7.3.3",
     "googleapis": "^176.0.0",
     "marked": "^18.0.10",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "sharp": "^0.35.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
@@ -53,5 +52,9 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.3",
     "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "path-to-regexp": "^6.3.0",
+    "zod": "^4.6.6"
   }
 }

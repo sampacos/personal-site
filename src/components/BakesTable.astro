@@ -1,0 +1,59 @@
+---
+import type { Bake } from '../lib/bakes';
+
+interface Props {
+  bakes: Bake[];
+}
+
+const { bakes } = Astro.props;
+
+function formatDate(isoDate: string): string {
+  return new Date(`${isoDate}T00:00:00Z`).toLocaleDateString('en-US', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+---
+
+{
+  bakes.length === 0 ? (
+    <p class="text-xs text-gray-600 dark:text-[#aaaaaa]">No bakes logged yet.</p>
+  ) : (
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-[13px]">
+        <thead>
+          <tr class="border-b border-gray-200 dark:border-[#333333]">
+            <th scope="col" class="py-1.5 pr-4 font-medium">
+              Date
+            </th>
+            <th scope="col" class="py-1.5 font-medium">
+              Description
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {bakes.map((bake) => (
+            <tr class="border-b border-gray-100 dark:border-[#2a2a2a]">
+              <td class="py-1.5 pr-4 whitespace-nowrap">
+                <a
+                  href={`/bread/bakes/${encodeURIComponent(bake.id)}`}
+                  class="craigslist-link font-mono"
+                >
+                  <time datetime={bake.date}>{formatDate(bake.date)}</time>
+                </a>
+              </td>
+              <td class="py-1.5">
+                <a href={`/bread/bakes/${encodeURIComponent(bake.id)}`} class="craigslist-link">
+                  {bake.description || <span class="text-gray-400 dark:text-gray-500">—</span>}
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}

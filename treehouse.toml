@@ -1,0 +1,8 @@
+# treehouse pool config — see https://github.com/kunchenguid/treehouse
+max_trees = 4
+
+# Branch new and recycled worktrees are cut from.
+base_branch = "main"
+
+# Keep every slot's directory named after the repository (default).
+# unique_leaf = false

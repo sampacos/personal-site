@@ -201,13 +201,13 @@ export default function AdminBlogManager() {
       <form
         ref={formRef}
         onSubmit={handleSubmit}
-        className="p-4 border border-gray-200 dark:border-[#333333] bg-white dark:bg-[#1f1f1f] rounded-xs space-y-4"
+        className="space-y-4 rounded-xs border border-gray-200 bg-white p-4 dark:border-[#333333] dark:bg-[#1f1f1f]"
       >
-        <div className="flex items-center justify-between pb-2 border-b border-gray-200 dark:border-[#333333]">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-black dark:text-white flex items-center gap-2">
+        <div className="flex items-center justify-between border-b border-gray-200 pb-2 dark:border-[#333333]">
+          <h3 className="flex items-center gap-2 text-xs font-bold tracking-wider text-black uppercase dark:text-white">
             <span>{editingId ? '✏️ Edit Blog Post' : '+ Compose New Blog Post'}</span>
             {editingId && (
-              <span className="text-[10px] bg-blue-100 dark:bg-[#152e4d] text-blue-800 dark:text-blue-300 px-1.5 py-0.5 rounded-xs font-mono">
+              <span className="rounded-xs bg-blue-100 px-1.5 py-0.5 font-mono text-[10px] text-blue-800 dark:bg-[#152e4d] dark:text-blue-300">
                 Editing: {title || editingId}
               </span>
             )}
@@ -217,7 +217,7 @@ export default function AdminBlogManager() {
             <button
               type="button"
               onClick={cancelEdit}
-              className="text-xs text-gray-500 hover:text-black dark:hover:text-white underline cursor-pointer"
+              className="cursor-pointer text-xs text-gray-500 underline hover:text-black dark:hover:text-white"
             >
               Cancel Edit
             </button>
@@ -225,22 +225,22 @@ export default function AdminBlogManager() {
         </div>
 
         {error && (
-          <div className="p-2 text-xs bg-red-50 dark:bg-[#351515] border border-red-200 dark:border-[#5a2020] text-red-700 dark:text-red-300 rounded-xs">
+          <div className="rounded-xs border border-red-200 bg-red-50 p-2 text-xs text-red-700 dark:border-[#5a2020] dark:bg-[#351515] dark:text-red-300">
             {error}
           </div>
         )}
 
         {successMsg && (
-          <div className="p-2 text-xs bg-green-50 dark:bg-[#1a3820] border border-green-200 dark:border-[#2a5030] text-green-800 dark:text-green-300 rounded-xs">
+          <div className="rounded-xs border border-green-200 bg-green-50 p-2 text-xs text-green-800 dark:border-[#2a5030] dark:bg-[#1a3820] dark:text-green-300">
             {successMsg}
           </div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div className="grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">
           <div>
             <label
               htmlFor="post-title"
-              className="block text-[11px] font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="mb-1 block text-[11px] font-medium text-gray-700 dark:text-gray-300"
             >
               Post Title *
             </label>
@@ -251,14 +251,14 @@ export default function AdminBlogManager() {
               placeholder="e.g. sourdough experiments #4"
               value={title}
               onChange={(e) => handleTitleChange(e.target.value)}
-              className="w-full px-2.5 py-1.5 border border-gray-300 dark:border-[#444444] bg-white dark:bg-[#252525] text-black dark:text-white rounded-xs"
+              className="w-full rounded-xs border border-gray-300 bg-white px-2.5 py-1.5 text-black dark:border-[#444444] dark:bg-[#252525] dark:text-white"
             />
           </div>
 
           <div>
             <label
               htmlFor="post-slug"
-              className="block text-[11px] font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="mb-1 block text-[11px] font-medium text-gray-700 dark:text-gray-300"
             >
               URL Slug (/blog/[slug])
             </label>
@@ -268,7 +268,7 @@ export default function AdminBlogManager() {
               placeholder="e.g. sourdough-experiments-4"
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
-              className="w-full px-2.5 py-1.5 border border-gray-300 dark:border-[#444444] bg-white dark:bg-[#252525] text-black dark:text-white rounded-xs font-mono text-[11px]"
+              className="w-full rounded-xs border border-gray-300 bg-white px-2.5 py-1.5 font-mono text-[11px] text-black dark:border-[#444444] dark:bg-[#252525] dark:text-white"
             />
           </div>
         </div>
@@ -276,7 +276,7 @@ export default function AdminBlogManager() {
         <div className="text-xs">
           <label
             htmlFor="post-desc"
-            className="block text-[11px] font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="mb-1 block text-[11px] font-medium text-gray-700 dark:text-gray-300"
           >
             Short Description / Excerpt
           </label>
@@ -286,20 +286,20 @@ export default function AdminBlogManager() {
             placeholder="A brief 1-2 sentence preview for the homepage and blog listing..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full px-2.5 py-1.5 border border-gray-300 dark:border-[#444444] bg-white dark:bg-[#252525] text-black dark:text-white rounded-xs"
+            className="w-full rounded-xs border border-gray-300 bg-white px-2.5 py-1.5 text-black dark:border-[#444444] dark:bg-[#252525] dark:text-white"
           />
         </div>
 
         {/* Rich Markdown Editor Toolbar & View Switcher */}
         <div className="space-y-1.5 text-xs">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200 dark:border-[#333333] pb-1.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-200 pb-1.5 dark:border-[#333333]">
             {/* Formatting Toolbar */}
             <div className="flex flex-wrap items-center gap-1">
               <button
                 type="button"
                 onClick={() => insertFormatting('# ', '', 'Heading 1')}
                 title="Heading 1"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] font-bold rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] font-bold hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 H1
               </button>
@@ -307,7 +307,7 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('## ', '', 'Heading 2')}
                 title="Heading 2"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] font-bold rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] font-bold hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 H2
               </button>
@@ -315,18 +315,18 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('### ', '', 'Heading 3')}
                 title="Heading 3"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] font-bold rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] font-bold hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 H3
               </button>
 
-              <span className="text-gray-300 dark:text-[#444] mx-0.5">|</span>
+              <span className="mx-0.5 text-gray-300 dark:text-[#444]">|</span>
 
               <button
                 type="button"
                 onClick={() => insertFormatting('**', '**', 'bold text')}
                 title="Bold"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] font-bold rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] font-bold hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 B
               </button>
@@ -334,7 +334,7 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('*', '*', 'italic text')}
                 title="Italic"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] italic rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] italic hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 I
               </button>
@@ -342,18 +342,18 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('~~', '~~', 'strikethrough')}
                 title="Strikethrough"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] line-through rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] line-through hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 S
               </button>
 
-              <span className="text-gray-300 dark:text-[#444] mx-0.5">|</span>
+              <span className="mx-0.5 text-gray-300 dark:text-[#444]">|</span>
 
               <button
                 type="button"
                 onClick={() => insertFormatting('> ', '', 'quote')}
                 title="Quote"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 &ldquo;&rdquo;
               </button>
@@ -361,7 +361,7 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('- ', '', 'list item')}
                 title="Bullet List"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 &bull; List
               </button>
@@ -369,18 +369,18 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('1. ', '', 'first item')}
                 title="Numbered List"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 1. List
               </button>
 
-              <span className="text-gray-300 dark:text-[#444] mx-0.5">|</span>
+              <span className="mx-0.5 text-gray-300 dark:text-[#444]">|</span>
 
               <button
                 type="button"
                 onClick={() => insertFormatting('`', '`', 'code')}
                 title="Inline Code"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] font-mono rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 font-mono text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 &lt;/&gt;
               </button>
@@ -388,7 +388,7 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('```ts\n', '\n```', '// code block')}
                 title="Code Block"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] font-mono rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 font-mono text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 Block
               </button>
@@ -396,7 +396,7 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('[', '](https://)', 'link text')}
                 title="Link"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 🔗 Link
               </button>
@@ -404,7 +404,7 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('![', '](https://)', 'image alt text')}
                 title="Image"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 🖼️ Image
               </button>
@@ -412,7 +412,7 @@ export default function AdminBlogManager() {
                 type="button"
                 onClick={() => insertFormatting('\n---\n\n')}
                 title="Horizontal Divider"
-                className="px-2 py-0.5 border border-gray-200 dark:border-[#444444] bg-gray-50 dark:bg-[#282828] hover:bg-gray-200 dark:hover:bg-[#383838] text-[11px] rounded-xs cursor-pointer"
+                className="cursor-pointer rounded-xs border border-gray-200 bg-gray-50 px-2 py-0.5 text-[11px] hover:bg-gray-200 dark:border-[#444444] dark:bg-[#282828] dark:hover:bg-[#383838]"
               >
                 &mdash; Line
               </button>
@@ -423,10 +423,10 @@ export default function AdminBlogManager() {
               <button
                 type="button"
                 onClick={() => setViewMode('write')}
-                className={`px-2 py-0.5 text-[11px] rounded-xs cursor-pointer border ${
+                className={`cursor-pointer rounded-xs border px-2 py-0.5 text-[11px] ${
                   viewMode === 'write'
-                    ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white font-semibold'
-                    : 'bg-white dark:bg-[#252525] border-gray-300 dark:border-[#444444] text-gray-700 dark:text-gray-300'
+                    ? 'border-black bg-black font-semibold text-white dark:border-white dark:bg-white dark:text-black'
+                    : 'border-gray-300 bg-white text-gray-700 dark:border-[#444444] dark:bg-[#252525] dark:text-gray-300'
                 }`}
               >
                 Write
@@ -434,10 +434,10 @@ export default function AdminBlogManager() {
               <button
                 type="button"
                 onClick={() => setViewMode('preview')}
-                className={`px-2 py-0.5 text-[11px] rounded-xs cursor-pointer border ${
+                className={`cursor-pointer rounded-xs border px-2 py-0.5 text-[11px] ${
                   viewMode === 'preview'
-                    ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white font-semibold'
-                    : 'bg-white dark:bg-[#252525] border-gray-300 dark:border-[#444444] text-gray-700 dark:text-gray-300'
+                    ? 'border-black bg-black font-semibold text-white dark:border-white dark:bg-white dark:text-black'
+                    : 'border-gray-300 bg-white text-gray-700 dark:border-[#444444] dark:bg-[#252525] dark:text-gray-300'
                 }`}
               >
                 Preview
@@ -445,10 +445,10 @@ export default function AdminBlogManager() {
               <button
                 type="button"
                 onClick={() => setViewMode('split')}
-                className={`hidden md:inline-block px-2 py-0.5 text-[11px] rounded-xs cursor-pointer border ${
+                className={`hidden cursor-pointer rounded-xs border px-2 py-0.5 text-[11px] md:inline-block ${
                   viewMode === 'split'
-                    ? 'bg-black dark:bg-white text-white dark:text-black border-black dark:border-white font-semibold'
-                    : 'bg-white dark:bg-[#252525] border-gray-300 dark:border-[#444444] text-gray-700 dark:text-gray-300'
+                    ? 'border-black bg-black font-semibold text-white dark:border-white dark:bg-white dark:text-black'
+                    : 'border-gray-300 bg-white text-gray-700 dark:border-[#444444] dark:bg-[#252525] dark:text-gray-300'
                 }`}
               >
                 Split View
@@ -467,13 +467,13 @@ export default function AdminBlogManager() {
                 placeholder="Write your blog post here... Supports Markdown formatting."
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="w-full font-mono text-xs p-3 border border-gray-300 dark:border-[#444444] bg-white dark:bg-[#252525] text-black dark:text-white rounded-xs leading-relaxed focus:outline-2 focus:outline-blue-500"
+                className="w-full rounded-xs border border-gray-300 bg-white p-3 font-mono text-xs leading-relaxed text-black focus:outline-2 focus:outline-blue-500 dark:border-[#444444] dark:bg-[#252525] dark:text-white"
               />
             )}
 
             {viewMode === 'preview' && (
               <div
-                className="w-full min-h-[260px] p-4 border border-gray-200 dark:border-[#333333] bg-gray-50 dark:bg-[#181818] rounded-xs blog-preview-content prose dark:prose-invert max-w-none text-xs leading-relaxed"
+                className="blog-preview-content prose dark:prose-invert min-h-[260px] w-full max-w-none rounded-xs border border-gray-200 bg-gray-50 p-4 text-xs leading-relaxed dark:border-[#333333] dark:bg-[#181818]"
                 dangerouslySetInnerHTML={{ __html: parsedPreview }}
               />
             )}
@@ -487,17 +487,17 @@ export default function AdminBlogManager() {
                   placeholder="Write your blog post here..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  className="w-full font-mono text-xs p-3 border border-gray-300 dark:border-[#444444] bg-white dark:bg-[#252525] text-black dark:text-white rounded-xs leading-relaxed focus:outline-2 focus:outline-blue-500"
+                  className="w-full rounded-xs border border-gray-300 bg-white p-3 font-mono text-xs leading-relaxed text-black focus:outline-2 focus:outline-blue-500 dark:border-[#444444] dark:bg-[#252525] dark:text-white"
                 />
                 <div
-                  className="w-full h-full min-h-[260px] p-4 border border-gray-200 dark:border-[#333333] bg-gray-50 dark:bg-[#181818] rounded-xs blog-preview-content prose dark:prose-invert max-w-none text-xs leading-relaxed overflow-y-auto"
+                  className="blog-preview-content prose dark:prose-invert h-full min-h-[260px] w-full max-w-none overflow-y-auto rounded-xs border border-gray-200 bg-gray-50 p-4 text-xs leading-relaxed dark:border-[#333333] dark:bg-[#181818]"
                   dangerouslySetInnerHTML={{ __html: parsedPreview }}
                 />
               </div>
             )}
           </div>
 
-          <div className="flex items-center justify-between text-[11px] text-gray-500 dark:text-gray-400 pt-1">
+          <div className="flex items-center justify-between pt-1 text-[11px] text-gray-500 dark:text-gray-400">
             <span>
               {wordCount} {wordCount === 1 ? 'word' : 'words'} &bull; {charCount} characters
             </span>
@@ -506,12 +506,12 @@ export default function AdminBlogManager() {
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-2 flex items-center justify-end gap-3">
+        <div className="flex items-center justify-end gap-3 pt-2">
           {editingId && (
             <button
               type="button"
               onClick={cancelEdit}
-              className="px-3 py-1.5 text-xs text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-[#444444] rounded-xs hover:bg-gray-100 dark:hover:bg-[#282828] cursor-pointer"
+              className="cursor-pointer rounded-xs border border-gray-300 px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-100 dark:border-[#444444] dark:text-gray-300 dark:hover:bg-[#282828]"
             >
               Cancel
             </button>
@@ -520,7 +520,7 @@ export default function AdminBlogManager() {
           <button
             type="submit"
             disabled={submitting}
-            className="px-4 py-1.5 text-xs font-semibold bg-black dark:bg-white text-white dark:text-black rounded-xs hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 cursor-pointer"
+            className="cursor-pointer rounded-xs bg-black px-4 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-gray-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-gray-200"
           >
             {submitting
               ? 'Saving to Google Sheets...'
@@ -533,14 +533,14 @@ export default function AdminBlogManager() {
 
       {/* 2. Existing Blog Posts List with Edit & Delete */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between border-b border-gray-200 dark:border-[#2a2a2a] pb-1">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-black dark:text-white">
+        <div className="flex items-center justify-between border-b border-gray-200 pb-1 dark:border-[#2a2a2a]">
+          <h3 className="text-xs font-bold tracking-wider text-black uppercase dark:text-white">
             Existing Blog Posts ({posts.length})
           </h3>
           <button
             type="button"
             onClick={fetchPosts}
-            className="text-[11px] craigslist-link cursor-pointer"
+            className="craigslist-link cursor-pointer text-[11px]"
           >
             refresh
           </button>
@@ -549,16 +549,16 @@ export default function AdminBlogManager() {
         {loading ? (
           <p className="text-xs text-gray-500 dark:text-gray-400">Loading from Google Sheets...</p>
         ) : posts.length === 0 ? (
-          <p className="text-xs text-gray-500 dark:text-gray-400 italic">No posts published yet.</p>
+          <p className="text-xs text-gray-500 italic dark:text-gray-400">No posts published yet.</p>
         ) : (
-          <ul className="space-y-2 list-none p-0 m-0 text-xs">
+          <ul className="m-0 list-none space-y-2 p-0 text-xs">
             {posts.map((post) => (
               <li
                 key={post.id}
-                className={`flex items-start justify-between gap-3 p-3 border rounded-xs transition-colors ${
+                className={`flex items-start justify-between gap-3 rounded-xs border p-3 transition-colors ${
                   editingId === post.id
-                    ? 'border-blue-500 dark:border-blue-400 bg-blue-50/40 dark:bg-[#182638]'
-                    : 'border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#181818]'
+                    ? 'border-blue-500 bg-blue-50/40 dark:border-blue-400 dark:bg-[#182638]'
+                    : 'border-gray-200 bg-white dark:border-[#2a2a2a] dark:bg-[#181818]'
                 }`}
               >
                 <div className="min-w-0 flex-1">
@@ -567,23 +567,23 @@ export default function AdminBlogManager() {
                       href={`/blog/${post.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="craigslist-link font-bold text-xs truncate"
+                      className="craigslist-link truncate text-xs font-bold"
                     >
                       {post.title}
                     </a>
-                    <span className="text-[10px] text-gray-400 font-mono">/blog/{post.slug}</span>
+                    <span className="font-mono text-[10px] text-gray-400">/blog/{post.slug}</span>
                     {editingId === post.id && (
-                      <span className="text-[9px] uppercase font-bold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/50 px-1 py-0.2 rounded-xs">
+                      <span className="py-0.2 rounded-xs bg-blue-100 px-1 text-[9px] font-bold text-blue-600 uppercase dark:bg-blue-900/50 dark:text-blue-400">
                         Editing Now
                       </span>
                     )}
                   </div>
                   {post.description && (
-                    <p className="text-[11px] text-gray-600 dark:text-gray-400 line-clamp-1 mt-0.5">
+                    <p className="mt-0.5 line-clamp-1 text-[11px] text-gray-600 dark:text-gray-400">
                       {post.description}
                     </p>
                   )}
-                  <span className="text-[10px] text-gray-400 block mt-1">
+                  <span className="mt-1 block text-[10px] text-gray-400">
                     Published:{' '}
                     {new Date(post.publishedAt).toLocaleDateString('en-US', {
                       month: 'short',
@@ -591,7 +591,7 @@ export default function AdminBlogManager() {
                       year: 'numeric',
                     })}
                     {post.updatedAt && (
-                      <span className="ml-2 italic text-gray-500">
+                      <span className="ml-2 text-gray-500 italic">
                         (Updated:{' '}
                         {new Date(post.updatedAt).toLocaleDateString('en-US', {
                           month: 'short',
@@ -603,11 +603,11 @@ export default function AdminBlogManager() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3 shrink-0 pt-0.5">
+                <div className="flex shrink-0 items-center gap-3 pt-0.5">
                   <button
                     type="button"
                     onClick={() => startEdit(post)}
-                    className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline font-medium cursor-pointer"
+                    className="cursor-pointer text-[11px] font-medium text-blue-600 hover:underline dark:text-blue-400"
                   >
                     edit
                   </button>
@@ -615,7 +615,7 @@ export default function AdminBlogManager() {
                     href={`/blog/${post.slug}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[11px] craigslist-link"
+                    className="craigslist-link text-[11px]"
                   >
                     view
                   </a>
@@ -623,7 +623,7 @@ export default function AdminBlogManager() {
                     type="button"
                     onClick={() => handleDelete(post.id, post.title)}
                     disabled={deletingId === post.id}
-                    className="text-[11px] text-red-600 hover:underline cursor-pointer"
+                    className="cursor-pointer text-[11px] text-red-600 hover:underline"
                   >
                     {deletingId === post.id ? 'deleting...' : 'delete'}
                   </button>
