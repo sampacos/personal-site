@@ -4,7 +4,6 @@
 import '../styles/global.css';
 import { Font } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { SITE_TITLE } from '../consts';
 
 interface Props {
   title: string;
@@ -27,12 +26,6 @@ const imageSrc = typeof image === 'string' ? image : image.src;
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title={SITE_TITLE}
-  href={new URL('rss.xml', Astro.site)}
-/>
 <meta name="generator" content={Astro.generator} />
 
 <Font cssVariable="--font-atkinson" preload />

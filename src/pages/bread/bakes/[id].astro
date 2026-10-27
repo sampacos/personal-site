@@ -1,0 +1,379 @@
+---
+import AuthButton from '../../../components/AuthButton';
+import BakeEditManager from '../../../components/BakeEditManager';
+import BaseHead from '../../../components/BaseHead.astro';
+import Footer from '../../../components/Footer.astro';
+import MusicToggle from '../../../components/MusicToggle';
+import ThemeToggle from '../../../components/ThemeToggle';
+import { SITE_TITLE } from '../../../consts';
+import { getSession } from '../../../lib/auth';
+import { bakePhotoSrc, getBakeById, type Bake } from '../../../lib/bakes';
+import { calculateBread } from '../../../lib/bread';
+
+export const prerender = false;
+
+const { id } = Astro.params;
+if (!id) {
+  return Astro.redirect('/bread/bakes');
+}
+
+const bake: Bake | null = await getBakeById(id);
+if (!bake) {
+  return new Response('Bake not found', { status: 404 });
+}
+
+const result = calculateBread(bake.formula);
+const session = await getSession(Astro.request);
+const isAdmin = !!(session && session.user.isAdmin);
+const formula = bake.formula;
+const fmt1 = (value: number) => value.toFixed(1);
+const fmtHours = (value: number) => value.toFixed(2);
+
+function formatDate(isoDate: string): string {
+  return new Date(`${isoDate}T00:00:00Z`).toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Bake ${bake.date} - ${SITE_TITLE}`}
+      description={bake.description || `Bread baked on ${bake.date}`}
+    />
+    <script is:inline>
+      (function () {
+        const theme =
+          (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+  </head>
+  <body
+    class="flex min-h-screen flex-col justify-between bg-white font-sans text-[13px] leading-relaxed text-black transition-colors duration-150 dark:bg-[#151515] dark:text-[#e0e0e0]"
+  >
+    {/* Top Header Banner */}
+    <header
+      class="border-b border-gray-200 bg-white px-4 py-2 dark:border-[#333333] dark:bg-[#1e1e1e]"
+    >
+      <div class="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center space-x-2">
+          <a
+            href="/"
+            class="font-serif text-xl font-bold text-black hover:underline dark:text-white">pacos</a
+          >
+          <span class="text-gray-400 dark:text-gray-500">></span>
+          <span class="font-medium text-black dark:text-[#cccccc]">bread</span>
+          <span class="text-gray-400 dark:text-gray-500">></span>
+          <a href="/bread/bakes" class="font-medium text-black hover:underline dark:text-[#cccccc]"
+            >bakes</a
+          >
+          <span class="text-gray-400 dark:text-gray-500">></span>
+          <span class="text-gray-600 dark:text-[#aaaaaa]">{bake.date}</span>
+        </div>
+        <div class="flex items-center space-x-3 text-xs">
+          <ThemeToggle client:load />
+          <MusicToggle client:load />
+          <AuthButton client:load />
+        </div>
+      </div>
+    </header>
+
+    {/* Main Content Area */}
+    <main class="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-4 px-4 py-8 text-left">
+      <header class="space-y-1 border-b border-gray-200 pb-4 dark:border-[#2a2a2a]">
+        <h1 class="font-serif text-xl font-bold text-black dark:text-[#f0f0f0]">
+          Bake — <time datetime={bake.date}>{formatDate(bake.date)}</time>
+        </h1>
+        {
+          bake.description && (
+            <p class="text-sm text-gray-600 italic dark:text-gray-300">{bake.description}</p>
+          )
+        }
+      </header>
+
+      {/* Formula inputs */}
+      <section
+        class="rounded-xs border border-gray-200 bg-white p-4 shadow-sm dark:border-[#333333] dark:bg-[#1c1c1c]"
+      >
+        <h2 class="mb-2 font-serif text-sm font-bold text-black dark:text-[#f0f0f0]">Formula</h2>
+        <div class="grid gap-x-6 gap-y-0.5 sm:grid-cols-2">
+          <div class="flex justify-between">
+            <span>Unit weight</span><span class="font-mono"
+              >{fmt1(formula.batch.unitWeight)} g</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Quantity of units</span><span class="font-mono"
+              >{fmt1(formula.batch.quantityOfUnits)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Waste factor</span><span class="font-mono"
+              >{fmt1(formula.batch.wasteFactor)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Batch size</span><span class="font-mono">{fmt1(result.batchSizeGrams)} g</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Starter hydration (maintenance)</span><span class="font-mono"
+              >{fmt1(formula.maintenanceStarter.starterHydration)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Multiplicative factor (maintenance)</span><span class="font-mono"
+              >{fmt1(formula.maintenanceStarter.multiplicativeFactor)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Sugar (dough starter)</span><span class="font-mono"
+              >{fmt1(formula.doughStarter.sugar)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Starter hydration (dough starter)</span><span class="font-mono"
+              >{fmt1(formula.doughStarter.starterHydration)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Multiplicative factor (dough starter)</span><span class="font-mono"
+              >{fmt1(formula.doughStarter.multiplicativeFactor)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Pre-fermented flour</span><span class="font-mono"
+              >{fmt1(formula.doughStarter.preFermentedFlour)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Water</span><span class="font-mono">{fmt1(formula.dough.water)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Milk</span><span class="font-mono">{fmt1(formula.dough.milk)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Heavy cream</span><span class="font-mono">{fmt1(formula.dough.heavyCream)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Egg</span><span class="font-mono">{fmt1(formula.dough.egg)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Egg yolk</span><span class="font-mono">{fmt1(formula.dough.eggYolk)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Butter</span><span class="font-mono">{fmt1(formula.dough.butter)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Sugar</span><span class="font-mono">{fmt1(formula.dough.sugar)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Honey</span><span class="font-mono">{fmt1(formula.dough.honey)}%</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Salt</span><span class="font-mono">{fmt1(formula.dough.salt)}%</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Build tables */}
+      <section
+        class="rounded-xs border border-gray-200 bg-white p-4 shadow-sm dark:border-[#333333] dark:bg-[#1c1c1c]"
+      >
+        <h2 class="mb-2 font-serif text-sm font-bold text-black dark:text-[#f0f0f0]">Builds</h2>
+        <div class="grid gap-6 sm:grid-cols-3">
+          {
+            [result.maintenanceStarter, result.doughStarter, result.finalDough].map((table) => (
+              <table class="w-full text-left text-[13px]">
+                <caption class="mb-1 text-left font-semibold">{table.title}</caption>
+                <thead>
+                  <tr class="border-b border-gray-200 dark:border-[#333333]">
+                    <th scope="col" class="py-1 pr-2 font-medium">
+                      Ingredient
+                    </th>
+                    <th scope="col" class="py-1 pr-2 text-right font-medium">
+                      %
+                    </th>
+                    <th scope="col" class="py-1 text-right font-medium">
+                      g
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {table.rows.map((row) => (
+                    <tr class="border-b border-gray-100 dark:border-[#2a2a2a]">
+                      <th scope="row" class="py-1 pr-2 font-normal">
+                        {row.ingredient}
+                      </th>
+                      <td class="py-1 pr-2 text-right font-mono">{fmt1(row.percent)}</td>
+                      <td class="py-1 text-right font-mono">{fmt1(row.grams)}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <th scope="row" class="py-1 pr-2 font-semibold">
+                      Total
+                    </th>
+                    <td class="py-1 pr-2 text-right font-mono font-semibold">
+                      {fmt1(table.totalPercent)}
+                    </td>
+                    <td class="py-1 text-right font-mono font-semibold">
+                      {fmt1(table.totalGrams)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            ))
+          }
+        </div>
+      </section>
+
+      {/* Metrics */}
+      <section class="grid gap-4 sm:grid-cols-2">
+        <div
+          class="rounded-xs border border-gray-200 bg-white p-4 shadow-sm dark:border-[#333333] dark:bg-[#1c1c1c]"
+        >
+          <h2 class="mb-2 font-serif text-sm font-bold text-black dark:text-[#f0f0f0]">
+            Dough Starter Metrics
+          </h2>
+          <div class="flex justify-between">
+            <span>Su</span><span class="font-mono">{fmt1(result.doughStarterMetrics.su)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Hu <span class="text-gray-400">ideal 28 – 35</span></span><span class="font-mono"
+              >{fmt1(result.doughStarterMetrics.hu)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Cu <span class="text-gray-400">ideal 30 – 40</span></span><span class="font-mono"
+              >{fmt1(result.doughStarterMetrics.cu)}</span>
+          </div>
+        </div>
+        <div
+          class="rounded-xs border border-gray-200 bg-white p-4 shadow-sm dark:border-[#333333] dark:bg-[#1c1c1c]"
+        >
+          <h2 class="mb-2 font-serif text-sm font-bold text-black dark:text-[#f0f0f0]">
+            Final Dough Metrics
+          </h2>
+          <div class="flex justify-between">
+            <span>Su</span><span class="font-mono">{fmt1(result.finalDoughMetrics.su)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Hu <span class="text-gray-400">ideal 28 – 35</span></span><span class="font-mono"
+              >{fmt1(result.finalDoughMetrics.hu)}</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Cu <span class="text-gray-400">ideal 25 – 50</span></span><span class="font-mono"
+              >{fmt1(result.finalDoughMetrics.cu)}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Fermentation */}
+      <section
+        class="rounded-xs border border-gray-200 bg-white p-4 shadow-sm dark:border-[#333333] dark:bg-[#1c1c1c]"
+      >
+        <h2 class="mb-2 font-serif text-sm font-bold text-black dark:text-[#f0f0f0]">
+          Estimated Fermentation Times (28° to 30°C)
+        </h2>
+        <div class="flex justify-between">
+          <span>Maintenance starter</span><span class="font-mono"
+            >{fmtHours(result.fermentation.maintenanceStarter.fromHours)} – {
+              fmtHours(result.fermentation.maintenanceStarter.toHours)
+            } h</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Dough starter</span><span class="font-mono"
+            >{fmtHours(result.fermentation.doughStarter.fromHours)} – {
+              fmtHours(result.fermentation.doughStarter.toHours)
+            } h</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Bulk</span><span class="font-mono"
+            >{fmtHours(result.fermentation.bulk.fromHours)} – {
+              fmtHours(result.fermentation.bulk.toHours)
+            } h</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Proof</span><span class="font-mono"
+            >{fmtHours(result.fermentation.proof.fromHours)} – {
+              fmtHours(result.fermentation.proof.toHours)
+            } h</span>
+        </div>
+      </section>
+
+      {/* Notes */}
+      {
+        bake.notes && (
+          <section class="rounded-xs border border-gray-200 bg-white p-4 shadow-sm dark:border-[#333333] dark:bg-[#1c1c1c]">
+            <h2 class="mb-2 font-serif text-sm font-bold text-black dark:text-[#f0f0f0]">Notes</h2>
+            <p class="whitespace-pre-wrap">{bake.notes}</p>
+          </section>
+        )
+      }
+
+      {/* Photos */}
+      {
+        bake.photos.length > 0 && (
+          <section class="rounded-xs border border-gray-200 bg-white p-4 shadow-sm dark:border-[#333333] dark:bg-[#1c1c1c]">
+            <h2 class="mb-2 font-serif text-sm font-bold text-black dark:text-[#f0f0f0]">Photos</h2>
+            <div class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+              {bake.photos.map((reference) => (
+                <img
+                  src={bakePhotoSrc(reference)}
+                  alt={`Photo of the bake from ${bake.date}`}
+                  loading="lazy"
+                  class="h-40 w-full rounded-xs border border-gray-200 object-cover dark:border-[#333333]"
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        isAdmin && (
+          <BakeEditManager
+            client:visible
+            bake={{
+              id: bake.id,
+              date: bake.date,
+              description: bake.description,
+              notes: bake.notes,
+              photos: bake.photos.map((reference) => ({
+                id: reference,
+                url: bakePhotoSrc(reference),
+              })),
+            }}
+          />
+        )
+      }
+
+      <div>
+        <a href="/bread/bakes" class="craigslist-link text-xs">&larr; all bakes</a>
+      </div>
+    </main>
+
+    {/* Footer */}
+    <Footer />
+
+    <style is:global>
+      a.craigslist-link,
+      a.craigslist-link:link {
+        color: #0000ee;
+        text-decoration: underline;
+      }
+      a.craigslist-link:visited {
+        color: #551a8b;
+      }
+      a.craigslist-link:hover {
+        text-decoration: underline;
+        color: #0000ee;
+      }
+      a.craigslist-link:active {
+        color: #ff0000;
+      }
+    </style>
+  </body>
+</html>

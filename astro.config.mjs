@@ -1,6 +1,5 @@
 // @ts-check
 
-import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import vercel from '@astrojs/vercel';
@@ -12,7 +11,7 @@ export default defineConfig({
   site: 'https://example.com',
   output: 'static',
   adapter: vercel(),
-  integrations: [mdx(), sitemap(), react()],
+  integrations: [sitemap(), react()],
 
   env: {
     schema: {
@@ -46,6 +45,7 @@ export default defineConfig({
         optional: true,
       }),
       GOOGLE_PRIVATE_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      BLOB_READ_WRITE_TOKEN: envField.string({ context: 'server', access: 'secret', optional: true }),
     },
   },
 
